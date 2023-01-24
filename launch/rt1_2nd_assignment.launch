@@ -7,6 +7,5 @@
 
     <node pkg="rt1_2nd_assignment" type="NodeA.py" name="NodeA" launch-prefix="gnome-terminal --command" />
     <node pkg="rt1_2nd_assignment" type="NodeB.py" name="NodeB" launch-prefix="gnome-terminal --command" />
-    <node pkg="rt1_2nd_assignment" type="NodeC.py" name="NodeC" launch-prefix="gnome-terminal --command" />
-    <node pkg="rt1_2nd_assignment" type="NodeD.py" name="NodeD" launch-prefix="gnome-terminal --command" />    
+    <node pkg="rt1_2nd_assignment" type="NodeC.py" name="NodeC" launch-prefix="gnome-terminal --command" />   
 </launch>

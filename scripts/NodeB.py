@@ -1,48 +1,89 @@
-#! /usr/bin/env python3
+#!/usr/bin/env python3
 
+
+# import the necessary libraries
 import rospy
-from nav_msgs.msg import Odometry
-from assignment_2_2022.msg import odom_custom_msg
+from std_srvs.srv import Empty,EmptyResponse
+import assignment_2_2022.msg
 import os
 
+
+
+#global variables
+reached_goal_counter =0
+canceled_goal_counetr = 0
+sequence =1 
 start_description_flag=1
 
+#callback function
+#this function is called when the service is called
+#it prints the number of goals reached and canceled
+#and returns an empty response
+#it also prints the sequence number of the service call
+#the sequence number is a global variable that is incremented
+#every time the service is called
+#the sequence number is used to distinguish between different calls
+#of the service
+#the sequence number is printed every time the service is called
+#the sequence number is also printed when the node is started
+#the sequence number is printed in the start_description function
+#the start_description function is called when the node is started
+#the start_description function is called only once
+#the start_description_flag is a global variable that is set to 1
+#when the node is started
+#the start_description_flag is set to 0 when the start_description function
+#is called
+#the start_description_flag is used to call the start_description function
+#only once
+#the start_description function is called in the main function
+#the start_description function is called only if the start_description_flag
+#is equal to 1
+#the start_description_flag is set to 0 when the start_description function
+#is called
+#the start_description_flag is used to call the start_description function
+#
+def callback_service(req):
+    global canceled_goal_counetr , reached_goal_counter , sequence
+    print(f"Sequence: {sequence}\nNumber of canceled goal: {canceled_goal_counetr}\nnumber of reached goal: {reached_goal_counter}")
+    print("-------------------------------------")
+    sequence += 1
+    return EmptyResponse()
 
 
-def callback(data):
 
-    my_publisher = rospy.Publisher('position_and_velocity', odom_custom_msg, queue_size=5)
+def callback_subscriber(data):
 
-    my_custom_message = odom_custom_msg()
+    if data.status.status == 2:
 
-    my_custom_message.x = data.pose.pose.position.x
-    my_custom_message.y = data.pose.pose.position.y
-    my_custom_message.vel_x = data.twist.twist.linear.x
-    my_custom_message.vel_y = data.twist.twist.linear.y
+        global canceled_goal_counetr
+        canceled_goal_counetr += 1
+    
+    elif data.status.status == 3:
 
-    print("----------------------------------------")
-    print(my_custom_message)
-    my_publisher.publish(my_custom_message)
+        global reached_goal_counter
+        reached_goal_counter += 1
 
-   # rospy.sleep(1)   This node publishes the robot position and velocity as a custom message (x,y, vel_x, vel_z), by relying on the values published on the topic /odom.
 
 def start_description(start_description_flag):
     if start_description_flag == 1:
         os.system('clear')
         print("\n\n------------------Node description------------------\n\n")
-        print("This node publishes the robot position and velocity ")
-        print("as a custom message (x,y, vel_x, vel_z), by relying ")
-        print("on the values published on the topic /odom.")
+        print("This node is a service node that, when called,")
+        print("prints the number of goals reached and canceled.")
         input("\n\nPress Enter to continue!")
         start_description_flag=0   
-    
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
 
     start_description(start_description_flag)
-    rospy.init_node('NodeB')    
-    rospy.Subscriber("/odom", Odometry, callback)
-    
-    # spin() simply keeps python from exiting until this node is stopped
+
+    rospy.logwarn("service started")
+
+    rospy.init_node('NodeB')
+
+    rospy.Subscriber("/reaching_goal/result", assignment_2_2022.msg.PlanningActionResult, callback_subscriber)
+
+    rospy.Service('reach_cancel_ints', Empty, callback_service)
 
     rospy.spin()

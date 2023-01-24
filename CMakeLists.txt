@@ -64,7 +64,7 @@ add_message_files(
 ## Generate services in the 'srv' folder
 add_service_files(
   FILES
-  goal_status_custom_nodeC.srv
+  goal_status_custom_nodeB.srv
   #Service2.srv
 )
 

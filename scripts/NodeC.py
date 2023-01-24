@@ -1,60 +1,95 @@
 #!/usr/bin/env python3
 
+
+import math
+from assignment_2_2022.msg import odom_custom_msg
 import rospy
-from std_srvs.srv import Empty,EmptyResponse
-import assignment_2_2022.msg
 import os
 
 start_description_flag=1
 
+counter =0
+temp_vel =0
+avg_vel =0
+des_pos_distance=0
 
-reached_goal_counter =0
-canceled_goal_counetr = 0
-sequence =1 
 
-
-def callback_service(req):
-    global canceled_goal_counetr , reached_goal_counter , sequence
-    print(f"Sequence: {sequence}\nNumber of canceled goal: {canceled_goal_counetr}\nnumber of reached goal: {reached_goal_counter}")
-    print("-------------------------------------")
-    sequence += 1
-    return EmptyResponse()
 
 
 
 def callback_subscriber(data):
 
-    if data.status.status == 2:
+    global counter
+    global temp_vel
+    global avg_vel
+    global des_pos_distance
 
-        global canceled_goal_counetr
-        canceled_goal_counetr += 1
-    
-    elif data.status.status == 3:
+    des_pos_x = rospy.get_param("/des_pos_x")
+    des_pos_y = rospy.get_param("/des_pos_y")
 
-        global reached_goal_counter
-        reached_goal_counter += 1
+    cur_pos_x = data.x
+    cur_pos_y = data.y
+
+    des_pos_distance= math.sqrt(((des_pos_x - cur_pos_x)**2)+((des_pos_y - cur_pos_y)**2))
+
+
+
+    cur_vel_x = data.vel_x
+    cur_vel_y = data.vel_y
+
+    cur_vel= math.sqrt(((cur_vel_x)**2)+((cur_vel_y)**2))
+
+    if counter<5:
+
+        temp_vel=temp_vel+cur_vel
+        counter +=1
+
+    elif counter==5:
+
+        counter=0
+        temp_vel /= 5
+        avg_vel=temp_vel
+        temp_vel=0
+
+
 
 
 def start_description(start_description_flag):
     if start_description_flag == 1:
         os.system('clear')
         print("\n\n------------------Node description------------------\n\n")
-        print("This node is a service node that, when called,")
-        print("prints the number of goals reached and canceled.")
+        print("This node subscribes to the robot’s position and ")
+        print("velocity (using the custom message) and prints the ")
+        print("distance of the robot from the target and the ")
+        print("robot’s average speed. ")
+        print("You can set the \"print_interval\" parameter in ")
+        print("assignment_2_2022 launch flie to set how fast the")
+        print("node publishes the information.")
+        
+
         input("\n\nPress Enter to continue!")
         start_description_flag=0   
+
+
+    
+
 
 
 if __name__ == "__main__":
 
     start_description(start_description_flag)
 
-    rospy.logwarn("service started")
+    rospy.logwarn("NodeC started")
 
     rospy.init_node('NodeC')
+    
+    rate = rospy.Rate(rospy.get_param("/print_interval"))
 
-    rospy.Subscriber("/reaching_goal/result", assignment_2_2022.msg.PlanningActionResult, callback_subscriber)
+    rospy.Subscriber("position_and_velocity", odom_custom_msg, callback_subscriber)
 
-    rospy.Service('reach_cancel_ints', Empty, callback_service)
+    while not rospy.is_shutdown():
 
-    rospy.spin()
+        print(f"distance: {des_pos_distance : .3f}")
+        print(f'average velocity: {avg_vel: .3f}')
+        print(f"---------------------------")
+        rate.sleep()
