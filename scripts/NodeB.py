@@ -67,7 +67,7 @@ def start_description(start_description_flag):
         input("\n\nPress Enter to continue!")
         start_description_flag=0   
 
-
+#main function
 if __name__ == "__main__":
 
     #start_description_flag is used to print the description of the node only once
