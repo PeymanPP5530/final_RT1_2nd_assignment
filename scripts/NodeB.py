@@ -24,24 +24,6 @@ start_description_flag=1
 #every time the service is called
 #the sequence number is used to distinguish between different calls
 #of the service
-#the sequence number is printed every time the service is called
-#the sequence number is also printed when the node is started
-#the sequence number is printed in the start_description function
-#the start_description function is called when the node is started
-#the start_description function is called only once
-#the start_description_flag is a global variable that is set to 1
-#when the node is started
-#the start_description_flag is set to 0 when the start_description function
-#is called
-#the start_description_flag is used to call the start_description function
-#only once
-#the start_description function is called in the main function
-#the start_description function is called only if the start_description_flag
-#is equal to 1
-#the start_description_flag is set to 0 when the start_description function
-#is called
-#the start_description_flag is used to call the start_description function
-#
 def callback_service(req):
     global canceled_goal_counetr , reached_goal_counter , sequence
     print(f"Sequence: {sequence}\nNumber of canceled goal: {canceled_goal_counetr}\nnumber of reached goal: {reached_goal_counter}")
@@ -50,7 +32,14 @@ def callback_service(req):
     return EmptyResponse()
 
 
-
+#callback function
+#this function is called when a message is received on the topic /reaching_goal/result
+#the message is of type PlanningAction/Result
+#this function increments the global variables canceled_goal_counetr and reached_goal_counter
+#depending on the status message
+#the status is an integer that can have the following values:
+#2: canceled
+#3: reached
 def callback_subscriber(data):
 
     if data.status.status == 2:
@@ -63,7 +52,12 @@ def callback_subscriber(data):
         global reached_goal_counter
         reached_goal_counter += 1
 
-
+#start_description function
+#this function is called when the program starts
+#it prints the description of the node
+#it waits for the user to press enter
+#it sets the start_description_flag to 0
+#the start_description_flag is used to print the description of the node only once
 def start_description(start_description_flag):
     if start_description_flag == 1:
         os.system('clear')
@@ -76,14 +70,28 @@ def start_description(start_description_flag):
 
 if __name__ == "__main__":
 
+    #start_description_flag is used to print the description of the node only once
     start_description(start_description_flag)
 
+    #logwarn is used to print a message in the terminal
+    #the message is printed only once
     rospy.logwarn("service started")
 
+    #Initialize the node
+    #the name of the node is NodeB
     rospy.init_node('NodeB')
 
+    #create a subscriber
+    #the subscriber subscribes to the topic /reaching_goal/result
+    #the message type is PlanningAction/Result
+    #the callback function is callback_subscribe    
     rospy.Subscriber("/reaching_goal/result", assignment_2_2022.msg.PlanningActionResult, callback_subscriber)
 
+    #create a service
+    #the service name is reach_cancel_ints
+    #the service type is Empty
+    #the callback function is callback_service
     rospy.Service('reach_cancel_ints', Empty, callback_service)
 
+    # spin() simply keeps python from exiting until this node is stopped
     rospy.spin()

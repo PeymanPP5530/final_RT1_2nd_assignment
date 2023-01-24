@@ -177,11 +177,10 @@ def callback(data):
 
 if __name__ == '__main__':
     #start_description_flag is used to print the description of the node only once
-    #the start_description function prints the description of the node
-    #the start_description function sets the start_description_flag to 0
     start_description(start_description_flag)
     
     #Initialize the node
+    #The name of the node is NodeA
     rospy.init_node('NodeA')
     #Subscribe to the topic /odom
     #The callback function is called when the node receives a message from the topic /odom
