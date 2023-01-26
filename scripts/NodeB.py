@@ -14,6 +14,7 @@ reached_goal_counter = 0
 canceled_goal_counetr = 0
 sequence = 1 
 start_description_flag = 1
+print_flag = True
 
 #callback function
 #this function is called when the service is called
@@ -26,6 +27,7 @@ start_description_flag = 1
 #of the service
 def callback_service(req):
     global canceled_goal_counetr , reached_goal_counter , sequence
+    print("-------------------------------------")
     print(f"Sequence: {sequence}\nNumber of canceled goal: {canceled_goal_counetr}\nnumber of reached goal: {reached_goal_counter}")
     print("-------------------------------------")
     sequence += 1
@@ -67,6 +69,8 @@ def start_description(start_description_flag):
         input("\n\nPress Enter to continue!")
         start_description_flag=0   
 
+
+
 #main function
 if __name__ == "__main__":
 
@@ -93,5 +97,18 @@ if __name__ == "__main__":
     #the callback function is callback_service
     rospy.Service('reach_cancel_ints', Empty, callback_service)
 
-    # spin() simply keeps python from exiting until this node is stopped
-    rospy.spin()
+    # # spin() simply keeps python from exiting until this node is stopped
+    # rospy.spin()
+
+    rate = rospy.Rate(1) # 1hz
+    #the node is alive until the user presses ctrl+c
+    while not rospy.is_shutdown():
+        
+        if print_flag== True:
+            print("waiting for a client to call the service ...")   
+            print_flag = not print_flag
+        else:
+            print("waiting for a client to call the service .")
+            print_flag = not print_flag
+        
+        rate.sleep()
