@@ -10,10 +10,10 @@ import os
 
 
 #global variables
-reached_goal_counter =0
+reached_goal_counter = 0
 canceled_goal_counetr = 0
-sequence =1 
-start_description_flag=1
+sequence = 1 
+start_description_flag = 1
 
 #callback function
 #this function is called when the service is called
@@ -61,7 +61,7 @@ def callback_subscriber(data):
 def start_description(start_description_flag):
     if start_description_flag == 1:
         os.system('clear')
-        print("\n\n------------------Node description------------------\n\n")
+        print("\n\n------------------Node B description------------------\n\n")
         print("This node is a service node that, when called,")
         print("prints the number of goals reached and canceled.")
         input("\n\nPress Enter to continue!")

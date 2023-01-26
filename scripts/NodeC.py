@@ -12,6 +12,7 @@ counter =0
 temp_vel =0
 avg_vel =0
 des_pos_distance=0
+sequence = 1
 
 
 
@@ -83,13 +84,13 @@ def callback_subscriber(data):
 def start_description(start_description_flag):
     if start_description_flag == 1:
         os.system('clear')
-        print("\n\n------------------Node description------------------\n\n")
+        print("\n\n------------------Node C description------------------\n\n")
         print("This node subscribes to the robot’s position and ")
         print("velocity (using the custom message) and prints the ")
         print("distance of the robot from the target and the ")
         print("robot’s average speed. ")
         print("You can set the \"print_interval\" parameter in ")
-        print("assignment_2_2022 launch flie to set how fast the")
+        print("rt1_2nd_assignment launch flie to set how fast the")
         print("node publishes the information.")
         
 
@@ -118,7 +119,8 @@ if __name__ == "__main__":
     #the rate is set using the parameter /print_interval
     #the parameter is set in the launch file
     #the parameter is used to set the rate at which the node publishes the information
-    rate = rospy.Rate(rospy.get_param("/print_interval"))
+    HZ=rospy.get_param("/print_interval")
+    rate = rospy.Rate(HZ)
 
     #create a subscriber object
     #the subscriber subscribes to the topic /odom_custom
@@ -127,11 +129,15 @@ if __name__ == "__main__":
     rospy.Subscriber("position_and_velocity", odom_custom_msg, callback_subscriber)
 
     #the node runs until it is shutdown
+    #the node prints the sequence number
+    #the node prints the data print interval
     #the node prints the distance of the robot from the target and the average velocity of the robot
     #the node sleeps for the time set in the rate object
     while not rospy.is_shutdown():
-
-        print(f"distance: {des_pos_distance : .3f}")
-        print(f'average velocity: {avg_vel: .3f}')
+        print(f"Sequence: {sequence}")
+        print(f"Data print interval : {HZ} HZ")        
+        print(f"distance to target: {des_pos_distance : .3f}")
+        print(f'Robot’s average velocity: {avg_vel: .3f}')
         print(f"---------------------------")
+        sequence += 1
         rate.sleep()

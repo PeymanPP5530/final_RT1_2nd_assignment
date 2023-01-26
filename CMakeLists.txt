@@ -61,12 +61,12 @@ add_message_files(
  # Message2.msg
 )
 
-## Generate services in the 'srv' folder
-add_service_files(
-  FILES
-  goal_status_custom_nodeB.srv
-  #Service2.srv
-)
+# ## Generate services in the 'srv' folder
+# add_service_files(
+#   FILES
+#   goal_status_custom_nodeB.srv
+#   #Service2.srv
+# )
 
 ## Generate actions in the 'action' folder
 #  add_action_files(

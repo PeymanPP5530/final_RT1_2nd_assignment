@@ -144,12 +144,12 @@ def interface():
 def start_description(start_description_flag):
     if start_description_flag == 1:
         os.system('clear')
-        print("\n\n------------------Node description------------------\n\n")
+        print("\n\n------------------Node A description------------------\n\n")
         print("This is the node that implements an action client, ")
         print("allowing the user to set a target (x, y) or to ")
         print("cancel it.")
-        print("\n\n------------------Node description------------------\n\n")
-        print("This node publishes the robot position and velocity ")
+        print("\n\n----------------------------------------------------\n\n")
+        print("Also this node publishes the robot position and velocity ")
         print("as a custom message (x,y, vel_x, vel_z), by relying ")
         print("on the values published on the topic /odom.")
         input("\n\nPress Enter to continue!")
