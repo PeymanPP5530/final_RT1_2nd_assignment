@@ -1,5 +1,7 @@
-Peyman Peyvandi Pour  - 5573284 - Robotics Engineering 
-
+[University of Genoa](https://unige.it/en/ "University of Genoa")
+Professor: [Carmine Recchiuto](https://github.com/CarmineD8 "Carmine Recchiuto")
+Student: Peyman Peyvandi Pour  - 5573284 - Robotics Engineering 
+Final assignment of Research Track 1 course
 ------------
 - [Aims of the assignment:](#aims-of-the-assignment-)
     * [Node A](#node-a)
@@ -27,7 +29,6 @@ Peyman Peyvandi Pour  - 5573284 - Robotics Engineering
     * [Print speed](#print-speed)
 - [possible improvements](#possible-improvements)
 
-<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'></a></i></small>
 
 
 ## Aims of the assignment:
