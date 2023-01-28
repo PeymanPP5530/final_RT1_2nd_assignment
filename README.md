@@ -23,8 +23,9 @@ Peyman Peyvandi Pour  - 5573284 - Robotics Engineering
         * [Gazebo:](#gazebo-)
 - [Installing and running](#installing-and-running)
 - [How it works](#how-it-works)
-  * [Node A](#node-a-1)
-  * [Print speed](#print-speed)
+    * [Node A](#node-a-1)
+    * [Print speed](#print-speed)
+- [possible improvements](#possible-improvements)
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'></a></i></small>
 
@@ -48,7 +49,7 @@ Peyman Peyvandi Pour  - 5573284 - Robotics Engineering
 
 ###### Launch file
 
-- a launch file that  starts the whole simulation. Also, in this launch file the value for the frequency at which node C publishes the information is set.
+- A launch file that  starts the whole simulation. Also, in this launch file the value for the frequency at which node C publishes the information is set.
 
 ## ROS
 ##### What is ROS?
@@ -159,3 +160,9 @@ Or you can execute this command:
 ````shell
 rosparam set print_interval <value>
 ````
+## possible improvements
+1. In order to improve this project, it may be necessary to verify the robot's current position before sending the goal position. Since the robot is already in the goal position, no goal position needs to be sent to the action server.
+
+1. In addition, this project can be improved by checking the last state of the robot by Node A before sending the Cancel request to the action server. That way, if the robot has already achieved the goal or the server has already received another cancel request, there is no need to send a new cancel request.
+
+1. Furthermore, it would be useful to validate the goal position entered by the user before sending it to the action server. If this position is outside the robot's reachable position, the robot gets stuck in the loop of the `wall follow` function and the robot will infinitely follow the round wall of the canvas to avoid obstacles.
