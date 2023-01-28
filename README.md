@@ -1,6 +1,9 @@
-[University of Genoa](https://unige.it/en/ "University of Genoa")
+[Università degli studi di Genova](https://unige.it/en/ "University of Genoa")
+
 Professor: [Carmine Recchiuto](https://github.com/CarmineD8 "Carmine Recchiuto")
+
 Student: Peyman Peyvandi Pour  - 5573284 - Robotics Engineering 
+
 Final assignment of Research Track 1 course
 ------------
 - [Aims of the assignment:](#aims-of-the-assignment-)
@@ -33,7 +36,7 @@ Final assignment of Research Track 1 course
 
 ## Aims of the assignment:
 
-**Create a new package in which the following tasks should be developed: **
+Create a new package in which the following tasks should be developed: 
 
 
 ###### Node A 
@@ -111,7 +114,7 @@ roscore
 ````shell
 mkdir -p ~/catkin_ws/src
 cd ~/catkin_ws/
- catkin_make
+catkin_make
 ````
 - Source the new setup.*sh file:
 ````shell
