@@ -29,6 +29,7 @@ Final assignment of Research Track 1 course
 - [Installing and running](#installing-and-running)
 - [How it works](#how-it-works)
     * [Node A](#node-a-1)
+    * [Node B](#node-b-1)
     * [Print speed](#print-speed)
 - [possible improvements](#possible-improvements)
 
@@ -149,6 +150,15 @@ roslaunch rt1_2nd_assignment rt1_2nd_assignment.launch
 ### Node A
 The flowchart below shows how the code of Node A is working:
 ![flowchart](https://github.com/PeymanPP5530/final_RT1_2nd_assignment/blob/main/image/Screenshot%20from%202023-01-26%2020-30-21.png?raw=true "flowchart")
+### Node B
+This node is a service node that, when called prints the number of goals reached and canceled. When this service runs it waits for a client to call it. 
+![bode_b_wait](https://github.com/PeymanPP5530/final_RT1_2nd_assignment/blob/main/image/Screenshot%20from%202023-01-31%2011-26-22.png?raw=true "bode_b_wait")
+For calling the service node, open a new terminal and execute this command:
+````shell
+rosservice call /reach_cancel_ints 
+````
+Then, the number of reached and canceled goal will print on the Node B terminal:
+![node_b_print](https://github.com/PeymanPP5530/final_RT1_2nd_assignment/blob/main/image/Screenshot%20from%202023-01-31%2011-27-33.png?raw=true "node_b_print")
 ### Print speed
 As part of the assignment, a ROS parameter "print_interval" is defined to indicate how fast data should be printed on Node C. The initial value for this parameter is 5 which means that Node C will print data on the terminal 5 times per second (5 Hz). There are two ways to change this value.
 First one is executing this command:
