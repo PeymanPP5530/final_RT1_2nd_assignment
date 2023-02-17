@@ -2,7 +2,7 @@
 
 # import the necessary libraries
 import math
-from assignment_2_2022.msg import odom_custom_msg
+from rt1_2nd_assignment.msg import odom_custom_msg
 import rospy
 import os
 
